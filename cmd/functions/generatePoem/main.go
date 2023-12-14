@@ -26,6 +26,7 @@ func JSONMarshal(t interface{}) ([]byte, error) {
 type Payload struct {
 	Poem string
 	Id   string
+	Url  string
 }
 
 func handler(ctx context.Context) (*Payload, error) {
@@ -89,6 +90,7 @@ func handler(ctx context.Context) (*Payload, error) {
 	payload.Poem = text
 
 	payload.Id = fmt.Sprint(time.Now().Unix())
+	payload.Url = art.Data.URL
 
 	return &payload, nil
 }

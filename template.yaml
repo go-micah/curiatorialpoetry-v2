@@ -43,6 +43,8 @@ Resources:
                   S.$: $.Payload.Id
                 poem:
                   S.$: $.Payload.Poem
+                url:
+                  S.$: $.Payload.Url
             End: true
       Logging:
         Level: ALL

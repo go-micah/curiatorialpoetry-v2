@@ -32,6 +32,7 @@ func init() {
 type Poem struct {
 	Id   string `json:"id" dynamodbav:"id"`
 	Poem string `json:"poem" dynamodbav:"poem"`
+	Url  string `json:"url" dynamodbav:"url"`
 }
 
 func listItems(ctx context.Context) ([]Poem, error) {

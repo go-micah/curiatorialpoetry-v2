@@ -26,3 +26,13 @@ body {
     rgb(var(--background-start-rgb));
   white-space: pre-wrap;  
 }
+
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: blue;
+}
+
+a:hover {
+  background-color: yellow;
+}

@@ -160,6 +160,35 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       LogGroupName: !Sub /aws/lambda/${GetPoemsFunction}
+  RebuildSiteWebhook:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: go1.x
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: RebuildSiteWebhook
+      CodeUri: cmd/functions/rebuildSiteWebhook
+      Runtime: provided.al2
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Handler: bootstrap
+      Events:
+        Poems:
+          Type: DynamoDB
+          Properties:
+            Stream: !GetAtt Poems.StreamArn
+            StartingPosition: TRIM_HORIZON
+            BatchSize: 1
+      Environment:
+        Variables:
+          AMPLIFY_WEBHOOK_URL: '{{resolve:ssm:/curatorial-poetry/amplify-webhook-url:1}}'
+  RebuildSiteWebhookLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Retain
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${RebuildSiteWebhook}
 Outputs:
   GetPoemsAPI:
     Value: !Sub https://${Api}.execute-api.${AWS::Region}.amazonaws.com/Prod/
